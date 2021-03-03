@@ -2,10 +2,14 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
+class Veterinarian(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_vet = models.BooleanField(default=False)
+
 class PetModel(models.Model):
     name = models.CharField(max_length=64)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    vet = models.ForeignKey(User, default='Null', on_delete=models.SET_DEFAULT)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner_name')
+    vet = models.ForeignKey(User, default='Null', on_delete=models.SET_DEFAULT, related_name='vet_name')
     date_of_birth = models.DateField
     comments = models.TextField
 
@@ -21,7 +25,7 @@ class PetFoodModel(models.Model):
 
 
 class MealModel(models.Model):
-    pet_food = models.ForeignKey(PetFoodModel)
+    pet_food = models.ForeignKey(PetFoodModel, on_delete=models.CASCADE)
     pet = models.ForeignKey(PetModel, on_delete=models.CASCADE)
     amount = models.IntegerField
     date = models.DateTimeField
@@ -33,7 +37,13 @@ class MealPlanModel(models.Model):
     #     (1, 'lunch'),
     #     (2, 'dinner')
     # )
-    pet_food = models.ForeignKey
-    pet = models.OneToOneField(on_delete=models.CASCADE)
+    pet_food = models.ForeignKey(PetFoodModel, on_delete=models.CASCADE)
+    pet = models.OneToOneField(PetModel, on_delete=models.CASCADE)
     amount = models.IntegerField
     # type_of_meal = models.IntegerField(choices=TYPE_OF_MEAL_CHOICES)
+
+
+# class MessagesModel(models.Model):
+#     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipient')
+#     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
+#     message = models.TextField

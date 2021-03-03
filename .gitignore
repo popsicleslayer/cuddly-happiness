@@ -133,3 +133,6 @@ dmypy.json
 
 #Django settings file
 /final_project/settings.py
+
+#dbml file
+output.dmbl
