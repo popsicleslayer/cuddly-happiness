@@ -25,10 +25,15 @@ class PetFoodModel(models.Model):
 
 
 class MealModel(models.Model):
-    pet_food = models.ForeignKey(PetFoodModel, on_delete=models.CASCADE)
+    pet_food_used = models.ManyToManyField(PetFoodModel, through='PetFoodAmountModel')
     pet = models.ForeignKey(PetModel, on_delete=models.CASCADE)
-    amount = models.IntegerField
     date = models.DateTimeField
+
+
+class PetFoodAmountModel(models.Model):
+    meal = models.ForeignKey(MealModel, on_delete=models.CASCADE)
+    pet_food = models.ForeignKey(PetFoodModel, on_delete=models.CASCADE)
+    amount = models.IntegerField
 
 
 class MealPlanModel(models.Model):
