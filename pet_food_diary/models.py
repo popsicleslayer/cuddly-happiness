@@ -17,10 +17,10 @@ class PetModel(models.Model):
 class PetFoodModel(models.Model):
     brand = models.CharField(max_length=64)
     name = models.CharField(max_length=64)
-    proteins = models.IntegerField
-    fats = models.IntegerField
-    fiber = models.IntegerField
-    ash = models.IntegerField
+    proteins = models.FloatField
+    fats = models.FloatField
+    fiber = models.FloatField
+    ash = models.FloatField
     other = models.TextField
 
 
