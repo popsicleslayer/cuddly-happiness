@@ -1,0 +1,14 @@
+{%  extends 'base.html' %}
+
+{% block title %} Hi {{ username }}! {% endblock %}
+
+{% block content %}
+    <div class="pet_list">
+    <ul>
+ {% for pet in pets %}
+     <li>{{ pet.name }}</li>
+     <a href="/edit_pet" class="golink">Edit {{ pet.name }} information</a>
+ {% endfor %}
+    </ul>
+    </div>
+{% endblock %}

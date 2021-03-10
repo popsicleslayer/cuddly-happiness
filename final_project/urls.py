@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-import pet_food_diary.views as views
+import pet_food_diary.views as pet
 import register.views as register_views
 
 urlpatterns = [
@@ -24,4 +24,6 @@ urlpatterns = [
     path('create_user/', register_views.RegisterUserView.as_view(), name='register_user'),
     path('login/', register_views.LoginView.as_view(), name='login'),
     path('logout/', register_views.LogoutView.as_view(), name='logout'),
+    path('add_pet', pet.AddPetView.as_view(), name='add_pet'),
+    path('pet_list/<int:user_id>/', pet.PetListView.as_view(), name='pet_list'),
 ]
