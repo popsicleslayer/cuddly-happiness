@@ -33,7 +33,7 @@ class MealModel(models.Model):
 class PetFoodAmountModel(models.Model):
     meal = models.ForeignKey(MealModel, on_delete=models.CASCADE)
     pet_food = models.ForeignKey(PetFoodModel, on_delete=models.CASCADE)
-    amount = models.IntegerField
+    grams = models.IntegerField
 
 
 class MealPlanModel(models.Model):
@@ -44,7 +44,7 @@ class MealPlanModel(models.Model):
     # )
     pet_food = models.ForeignKey(PetFoodModel, on_delete=models.CASCADE)
     pet = models.OneToOneField(PetModel, on_delete=models.CASCADE)
-    amount = models.IntegerField
+    grams = models.IntegerField
     # type_of_meal = models.IntegerField(choices=TYPE_OF_MEAL_CHOICES)
 
 
