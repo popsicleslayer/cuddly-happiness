@@ -26,4 +26,5 @@ urlpatterns = [
     path('logout/', register_views.LogoutView.as_view(), name='logout'),
     path('add_pet', pet.AddPetView.as_view(), name='add_pet'),
     path('pet_list/<int:user_id>/', pet.PetListView.as_view(), name='pet_list'),
+    path('edit_pet/<int:pet_id>/', pet.EditPetView.as_view(),  name='edit_pet'),
 ]
