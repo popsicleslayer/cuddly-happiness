@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ object.pet.name }}'s meals {% endblock %}
+
+{% block content %}
+    <div class="meal_list">
+    <ul>
+        {% for object in meals %}
+            <li>{{ object.pet_food_used.pet_food.name}} {{ object.date }} </li>
+            <a href="/meal/{{ object.id }}/" class="golink">Details</a>
+        {% endfor %}
+    </ul>
+    </div>
+{% endblock %}

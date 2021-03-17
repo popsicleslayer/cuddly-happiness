@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %} Meal {{ object.date }} {% endblock %}
+
+{% block content %}
+    <ul>
+        <li>{{ object.pet_food_used.pet_food }}</li>
+        <li>{{ object.pet_food_used.grams }}</li>
+    </ul>
+{% endblock %}
