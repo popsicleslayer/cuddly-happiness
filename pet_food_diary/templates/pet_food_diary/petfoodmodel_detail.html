@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ object.name }} details {% endblock %}
+
+<p>Brand: {{ object.brand }}</p>
+<p>Name: {{ object.name }}</p>
+<ul>
+    <li>Proteins: {{ object.proteins }}</li>
+    <li>Fats: {{ object.fats }}</li>
+    <li>Fiber: {{ object.fiber }}</li>
+    <li>Ash: {{ object.ash }}</li>
+    <li>Other: {{ object.other }}</li>
+</ul>
+
+<a href="pet_food/edit/{{ petFood.id }}" class="golink">Edit</a>
+<a href="pet_food/delete/{{ petFood.id }}" class="golink">Delete</a>
+
