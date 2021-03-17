@@ -1,9 +1,11 @@
 
 from django.contrib.auth import authenticate, get_user_model, login, logout
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 
 from .forms import UserRegisterForm, UserLoginForm
+
+from pet_food_diary.models import Veterinarian
 
 # Create your views here.
 User = get_user_model()
@@ -19,14 +21,15 @@ class RegisterUserView(View):
         form = UserRegisterForm(request.POST)
         message = None
         if form.is_valid():
+            # form.save()
             clean_dt = form.cleaned_data
-            User.objects.create_user(
+            user = User.objects.create_user(
                 username=clean_dt['username'],
                 email=clean_dt['email'],
                 password=clean_dt['password1'],
-                is_vet=clean_dt['is_vet']
             )
-            message='User created!'
+            Veterinarian.objects.create(user=user, is_vet=clean_dt['is_vet'])
+            message = 'User created!'
         context = {
             'message': message,
             'form': form,
@@ -35,12 +38,14 @@ class RegisterUserView(View):
 
 
 class LoginView(View):
-    template_name = 'pet_food_diary/login.html'
+    template_name = 'register/login.html'
+
     def get(self, request, *args, **kwargs):
         context = {
             'form': UserLoginForm(),
         }
         return render(request, self.template_name, context)
+
     def post(self, request, *args, **kwargs):
         form = UserLoginForm(request.POST)
         message = None
@@ -50,6 +55,7 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
+                # return redirect('pet_list', pk=user.id)
             else:
                 message = 'Login credentials incorrect'
         else:
@@ -70,4 +76,4 @@ class LogoutView(View):
         context = {
             'message': message,
         }
-        return render(request, 'pet_food_diary/logout.html', context)
+        return render(request, 'register/logout.html', context)

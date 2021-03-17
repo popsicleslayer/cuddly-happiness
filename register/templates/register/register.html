@@ -4,6 +4,9 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    {% if message is not None %}
+    {{ message }}
+    {% endif %}
     <form method="POST" class="form-group">
         {% csrf_token %}
         {{ form|crispy }}
