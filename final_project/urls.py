@@ -21,10 +21,21 @@ import register.views as register_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', pet.MainPageView.as_view(), name='main'),
     path('create_user/', register_views.RegisterUserView.as_view(), name='register_user'),
     path('login/', register_views.LoginView.as_view(), name='login'),
     path('logout/', register_views.LogoutView.as_view(), name='logout'),
-    path('add_pet', pet.AddPetView.as_view(), name='add_pet'),
+    path('add_pet/', pet.AddPetView.as_view(), name='add_pet'),
     path('pet_list/<int:user_id>/', pet.PetListView.as_view(), name='pet_list'),
     path('edit_pet/<int:pet_id>/', pet.EditPetView.as_view(),  name='edit_pet'),
+    path('pet_food/', pet.PetFoodListView.as_view(), name='pet_food_list'),
+    path('pet_food/<int:pk>/', pet.petFoodDetail, name='pet_food'),
+    path('pet_food/add/', pet.PetFoodCreateView.as_view(), name='add_pet_food'),
+    path('pet_food/update/<int:pk>/', pet.PetFoodUpdateView.as_view(), name='update_pet_food'),
+    path('pet_food/delete/<int:pk>/', pet.PetFoodDeleteView.as_view(), name='delete_pet_food'),
+    path('meal/', pet.MealList.as_view(), name='meal_list'),
+    path('meal/add/', pet.MealCreateView.as_view(), name='add_meal'),
+    # path('meal/add/details/', pet.PetFoodAmountCreateView.as_view(), name='add_amount'),
+
+
 ]
