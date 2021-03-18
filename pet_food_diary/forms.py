@@ -1,7 +1,8 @@
 from django import forms
+from django.contrib.admin import widgets
 from django.forms import ModelForm
 
-from pet_food_diary.models import Veterinarian, PetModel, MealModel
+from pet_food_diary.models import Veterinarian, PetModel, MealModel, PetFoodAmountModel
 
 
 class PetForm(forms.Form):
@@ -14,12 +15,18 @@ class PetForm(forms.Form):
     comments = forms.CharField(widget=forms.Textarea, required=False)
 
 
-class MealForm(ModelForm):
-    class Meta:
-        model = MealModel
-        fields = ('pet', 'date')
-
-    def __init__(self, *args, **kwargs):
-        self.pet = forms.ModelChoiceField(queryset=PetModel.objects.filter(owner=kwargs.pop('user', None)))
-
-        super(MealForm, self).__init__(*args, **kwargs)
+# class MealForm(ModelForm):
+#     class Meta:
+#         model = MealModel
+#         fields = ('pet', 'date')
+#
+#     def __init__(self, *args, **kwargs):
+#         self.pet = forms.ModelChoiceField(queryset=PetModel.objects.filter(owner=kwargs.pop('user', None)))
+#
+#         super(MealForm, self).__init__(*args, **kwargs)
+#         self.fields['date'].widget = widgets.AdminSplitDateTime()
+#
+# class PetFoodAmountForm(ModelForm):
+#     class Meta:
+#         model = PetFoodAmountModel
+#         fields = '__all__'

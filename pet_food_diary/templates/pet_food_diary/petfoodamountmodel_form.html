@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %} Add amount and pet food used {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+            <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Add">
+        </form>
+{% endblock %}

@@ -13,6 +13,9 @@ class PetModel(models.Model):
     date_of_birth = models.DateField()
     comments = models.TextField(null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class PetFoodModel(models.Model):
     brand = models.CharField(max_length=64)
@@ -26,11 +29,17 @@ class PetFoodModel(models.Model):
     def get_absolute_url(self):
         return f'/pet_food/{self.id}/'
 
+    def __str__(self):
+        return self.name
+
 
 class MealModel(models.Model):
     pet_food_used = models.ManyToManyField(PetFoodModel, through='PetFoodAmountModel')
     pet = models.ForeignKey(PetModel, on_delete=models.CASCADE)
     date = models.DateTimeField()
+
+    def __str__(self):
+        return str(self.date)
 
 
 class PetFoodAmountModel(models.Model):

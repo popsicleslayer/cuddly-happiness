@@ -34,8 +34,13 @@ urlpatterns = [
     path('pet_food/update/<int:pk>/', pet.PetFoodUpdateView.as_view(), name='update_pet_food'),
     path('pet_food/delete/<int:pk>/', pet.PetFoodDeleteView.as_view(), name='delete_pet_food'),
     path('meal/', pet.MealList.as_view(), name='meal_list'),
+    path('meal/detail/<int:pk>/', pet.mealDetail, name='meal_detail'),
     path('meal/add/', pet.MealCreateView.as_view(), name='add_meal'),
-    # path('meal/add/details/', pet.PetFoodAmountCreateView.as_view(), name='add_amount'),
+    path('meal/add/details/', pet.PetFoodAmountCreateView.as_view(), name='add_amount'),
+    path('meal/update/<int:pk>/', pet.MealUpdateView.as_view(), name='update_meal'),
+    path('meal/detail/update/<int:pk>/', pet.PetFoodAmountUpdateView.as_view(), name='update_amount'),
+    path('meal/delete/<int:pk>/', pet.MealDeleteView.as_view(), name='delete_meal'),
+    path('meal/detail/delete/<int:pk>/', pet.PetFoodAmountDeleteView.as_view(), name='delete_amount'),
 
 
 ]
