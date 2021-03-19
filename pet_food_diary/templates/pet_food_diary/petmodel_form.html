@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %} Add a pet {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+            <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Save">
+        </form>
+{% endblock %}

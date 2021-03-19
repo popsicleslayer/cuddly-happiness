@@ -9,7 +9,7 @@ class Veterinarian(models.Model):
 class PetModel(models.Model):
     name = models.CharField(max_length=64)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner_name')
-    # vet = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='vet_name')
+    vet = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name='vet_name')
     date_of_birth = models.DateField()
     comments = models.TextField(null=True)
 

@@ -19,36 +19,10 @@ class MainPageView(View):
     pass
 
 
-class AddPetView(LoginRequiredMixin, View):
-    """Allows adding a new pet"""
-    login_url = loginURL
-    form = PetForm
-    template = "pet_food_diary/add_pet.html"
-
-    def get(self, request, *args, **kwargs):
-        context = {
-            'form': self.form,
-        }
-        return render(request, self.template, context)
-
-    def post(self, request, *args, **kwargs):
-        current_user = request.user
-        form = self.form(request.POST)
-        if form.is_valid():
-            pet = PetModel()
-            pet.owner = current_user
-            pet.name = form.cleaned_data.get('name')
-            pet.date_of_birth = form.cleaned_data.get('date_of_birth')
-            pet.comments = form.cleaned_data.get('Comments')
-            pet.save()
-            messages.success(request, 'Your pet has been successfully saved')
-        return redirect('pet_list', user_id=current_user)
-
-
 class PetListView(LoginRequiredMixin, View):
     """Lists all user's pets"""
     login_url = loginURL
-    template = "pet_food_diary/pet_list.html"
+    template = "pet_food_diary/petmodel_list.html"
 
     def get(self, request, *args, **kwargs):
         pet_list = PetModel.objects.filter(owner=kwargs['user_id'])
@@ -58,34 +32,47 @@ class PetListView(LoginRequiredMixin, View):
         return render(request, self.template, context)
 
 
-class EditPetView(LoginRequiredMixin, View):
-    """Allows user to edit an already existing pet entry. Prefills form with db data about pet."""
+class PetCreateView(LoginRequiredMixin, CreateView):
+    '''Creates a pet entry'''
     login_url = loginURL
-    form = PetForm
-    template = "pet_food_diary/edit_pet.html"
+    model = PetModel
+    fields = ('name', 'vet', 'date_of_birth', 'comments')
 
-    # pet = get_object_or_404(PetModel, pk='pet_id')
+    #Sets owner to current user. Hidden field
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.owner = user
+        return super(PetCreateView, self).form_valid(form)
 
-    def get(self, request, *args, **kwargs):
-        form = self.form(request.POST, instance=self.pet)
-        context = {
-            'form': form
-        }
-        return render(request, self.template, context)
+    #Redirects to the pet list for the current user
+    def get_success_url(self):
+        return f"/pet/list/{self.request.user.id}"
 
-    def post(self, request, *args, **kwargs):
-        current_user = request.user
-        if self.form.is_valid():
-            self.form.save()
-            messages.success(request, 'Changes saved')
-        return redirect('pet_list', user_id=current_user)
+
+class PetUpdateView(LoginRequiredMixin, UpdateView):
+    '''Updates a pet entry'''
+    login_url = loginURL
+    model = PetModel
+    fields = ('name', 'vet', 'date_of_birth', 'comments')
+
+    # Sets owner to current user. Hidden field
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.owner = user
+        return super(PetCreateView, self).form_valid(form)
+
+    # Redirects to the pet list for the current user
+    def get_success_url(self):
+        return f"/pet/list/{self.request.user.id}"
 
 
 class PetDeleteView(LoginRequiredMixin, DeleteView):
     '''Deletes a pet entry'''
     login_url = loginURL
     model = PetModel
-    success_url = 'pet_list'
+
+    def get_success_url(self, *args, **kwargs):
+        return f"/pet/list/{self.kwargs['user_id']}"
 
 
 @login_required(login_url=loginURL)
@@ -222,10 +209,11 @@ class PetFoodAmountCreateView(LoginRequiredMixin, CreateView):
     fields = '__all__'
     success_url = '/meal'
 
+    #Limits meal choices to the ones created by currently logged in user
     def get_form(self, *args, **kwargs):
         form = super(PetFoodAmountCreateView, self).get_form(*args, **kwargs)
-        form.fields['meal'].queryset = MealModel.objects.filter(pet={'owner': self.request.user})
-
+        form.fields['meal'].queryset = MealModel.objects.filter(pet__owner=self.request.user)
+        return form
 
 class MealUpdateView(LoginRequiredMixin, UpdateView):
     '''Updates meal db entries'''
@@ -245,6 +233,12 @@ class PetFoodAmountUpdateView(LoginRequiredMixin, UpdateView):
     login_url = loginURL
     model = PetFoodAmountModel
     fields = '__all__'
+
+    # Limits meal choices to the ones created by currently logged in user
+    def get_form(self, *args, **kwargs):
+        form = super(PetFoodAmountCreateView, self).get_form(*args, **kwargs)
+        form.fields['meal'].queryset = MealModel.objects.filter(pet__owner=self.request.user)
+        return form
 
 
 class MealDeleteView(LoginRequiredMixin, DeleteView):
