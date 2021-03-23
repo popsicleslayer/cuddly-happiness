@@ -2,6 +2,7 @@
 
 {% block title %} {{ object.name }} details {% endblock %}
 
+{% block content %}
 <p>Brand: {{ object.brand }}</p>
 <p>Name: {{ object.name }}</p>
 <ul>
@@ -14,4 +15,4 @@
 
 <a href="pet_food/edit/{{ petFood.id }}" class="golink">Edit</a>
 <a href="pet_food/delete/{{ petFood.id }}" class="golink">Delete</a>
-
+{% endblock %}
