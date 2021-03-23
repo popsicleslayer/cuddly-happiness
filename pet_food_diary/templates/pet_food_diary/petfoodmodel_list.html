@@ -7,7 +7,7 @@
     <ul>
         {% for object in petFood %}
             <li>{{ object.brand}} {{ object.name }}</li>
-            <a href="/pet_food/{{ object.id }}/" class="golink">Details</a>
+            <a href="/pet_food/details/{{ object.id }}/" class="golink">Details</a>
         {% endfor %}
     </ul>
     </div>

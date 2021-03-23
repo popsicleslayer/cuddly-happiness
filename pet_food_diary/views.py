@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -14,7 +16,8 @@ loginURL = 'login'
 
 # Create your views here.
 class MainPageView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        return render(request, 'base.html')
 
 
 class PetListView(LoginRequiredMixin, View):
@@ -23,9 +26,26 @@ class PetListView(LoginRequiredMixin, View):
     template = "pet_food_diary/petmodel_list.html"
 
     def get(self, request, *args, **kwargs):
-        pet_list = PetModel.objects.filter(owner=kwargs['user_id'])
+        pet_list = PetModel.objects.filter(owner=self.request.user.id)
         context = {
             'pets': pet_list,
+        }
+        return render(request, self.template, context)
+
+
+class PetDetailView(LoginRequiredMixin, View):
+    """Shows details of a pet entry"""
+    login_url = loginURL
+    template = 'pet_food_diary/petmodel_detail.html'
+    def get(self, request, *args, **kwargs):
+        pet = PetModel.objects.get(pk=kwargs['pk'])
+        current_date = date.today()
+        pet_age = current_date - pet.date_of_birth
+        user_id = self.request.user.id
+        context = {
+            'pet': pet,
+            'age': pet_age,
+            'user_id': user_id,
         }
         return render(request, self.template, context)
 

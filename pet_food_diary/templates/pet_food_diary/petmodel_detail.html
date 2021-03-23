@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ pet.name }}'s details {% endblock %}
+
+{% block content %}
+    <h1>Name: {{ pet.name }}</h1>
+    <h2>Owner: {{ pet.owner }}</h2>
+    {% if pet.vet is not None %}
+    <h2>Vet: {{ pet.vet }}</h2>
+    {% endif %}
+    <h2>{{ pet.name }}'s age: {{ age }}</h2>
+    <h4>Birth date:{{ pet.date_of_birth }}</h4>
+    <h4>Comments:{{ pet.comments }}</h4>
+
+    <a href="pet/edit/{{ pet.id }}" class="golink">Edit</a>
+    <a href="pet/delete/{{ pet.id }}" class="golink">Delete</a>
+    <a href="pet/list/{{ user_id }}" class="golink">Go back to pet list</a>
+
+{% endblock %}

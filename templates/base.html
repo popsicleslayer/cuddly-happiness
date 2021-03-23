@@ -7,6 +7,23 @@
     <title>Pet food diary</title>
   </head>
   <body>
+    <div class="home">
+        <a href="" class="home">Home</a>
+    </div>
+    <div class="login">
+        {% if user.is_authenticated %}
+        <a href="/logout/">Logout</a>
+        {% else %}
+        <a href="/login/">Login</a>
+        {% endif %}
+    </div>
+    <div class="menu">
+        <ul>
+            <div class="menu_entry"><li><a href="/meal/">Meals</a> </li></div>
+            <div class="menu_entry"><li><a href="/pet_food/">Pet food</a> </li></div>
+            <div class="menu_entry"><li><a href="/pet/list/">Pets</a> </li></div>
+        </ul>
+    </div>
     {% block title %}
     {% endblock %}
     <h1>Welcome to Pet Food Diary!</h1>
