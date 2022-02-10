@@ -37,9 +37,9 @@ def test_pet_list_view_unauth_access(client):
 @pytest.mark.django_db
 def test_pet_detail(client, pet, user):
     client.force_login(user)
-    response = client.get(f'/pet/details/{pet.pk}')
-    assert response.status_code == 301
-    # assert len(response.context['pet']) == 1
+    response = client.get(f'/pet/details/{pet.pk}/')
+    assert response.status_code == 200
+    assert len(response.context['pet']) == 1
 
 @pytest.mark.django_db
 def test_pet_create(client, user):
@@ -74,6 +74,9 @@ def test_pet_update(client,pet, user):
 @pytest.mark.django_db
 def test_pet_delete(client, pet, user):
     client.force_login(user)
-    response = client.delete(f'pet/delete/{pet.pk}')
+    response = client.delete(f'pet/delete/{pet.pk}/')
+    # Można też zrobić metodą post, bo to jest widok generyczny
     assert response.status_code == 404
-    assert None == PetModel.objects.get(pk=pet.pk)
+    assert len(PetModel.objects.filter(pk=pet.pk)) == 0
+    # PetModel.objects.filter(pk=pet.pk).count() == 0
+    # PetModel.objects.filter(pk=pet.pk).empty()

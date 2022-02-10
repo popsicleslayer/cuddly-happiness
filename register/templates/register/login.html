@@ -8,9 +8,9 @@
     {% if message %}
         <h4>{{ message }}</h4>
     {% endif %}
-    <form action="" method="POST">
+    <form class="php-email-form" action="" method="POST">
         {% csrf_token %}
-        {{ form|crispy }}
+        {{ form }}
         <p><input type="submit" value="Login" class="btn"></p>
     </form>
 {% endblock %}

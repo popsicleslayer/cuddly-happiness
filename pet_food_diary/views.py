@@ -80,13 +80,15 @@ class PetUpdateView(LoginRequiredMixin, UpdateView):
         return super(PetUpdateView, self).form_valid(form)
 
 
+
 class PetDeleteView(LoginRequiredMixin, DeleteView):
     """Deletes a pet entry"""
     login_url = loginURL
     model = PetModel
 
     def get_success_url(self, *args, **kwargs):
-        return f"/pet/list/{self.kwargs['user_id']}"
+        user = self.request.user
+        return f"/pet/list/"
 
 
 @login_required(login_url=loginURL)
@@ -136,8 +138,10 @@ class PetFoodDeleteView(LoginRequiredMixin, DeleteView):
 def meal_detail(request, pk):
     """Detailed view of a meal"""
     meal = MealModel.objects.get(pk=pk)
+    pet_food = meal.pet_food_used.all()
     context = {
-        'meal': meal
+        'meal': meal,
+        'pet_food': pet_food,
     }
     return render(request, 'mealmodel_detail.html', context)
 
@@ -148,11 +152,15 @@ class MealList(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         owner = request.user
-        pet = get_object_or_404(PetModel, owner=owner.id)
-        meals = MealModel.objects.filter(pet=pet)
+        pet_list = PetModel.objects.filter(owner=owner.id)
+        meal_list = []
+        for pet in pet_list:
+            meals = MealModel.objects.filter(pet=pet)
+            for meal in meals:
+                meal_list.append(meal)
         context = {
-            'pet': pet,
-            'meals': meals
+            'pets' : pet_list,
+            'meals' : meal_list,
         }
         return render(request, 'mealmodel_list.html', context)
 

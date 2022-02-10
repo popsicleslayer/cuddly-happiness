@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %} {{ object.name }} details {% endblock %}
+{% block title %} {{ petFood.name }} details {% endblock %}
 
 {% block content %}
-<p>Brand: {{ object.brand }}</p>
-<p>Name: {{ object.name }}</p>
+<p>Brand: {{ petFood.brand }}</p>
+<p>Name: {{ petFood.name }}</p>
 <ul>
-    <li>Proteins: {{ object.proteins }}</li>
-    <li>Fats: {{ object.fats }}</li>
-    <li>Fiber: {{ object.fiber }}</li>
-    <li>Ash: {{ object.ash }}</li>
-    <li>Other: {{ object.other }}</li>
+    <li>Proteins: {{ petFood.proteins }}</li>
+    <li>Fats: {{ petFood.fats }}</li>
+    <li>Fiber: {{ petFood.fiber }}</li>
+    <li>Ash: {{ petFood.ash }}</li>
+    <li>Other: {{ petFood.other }}</li>
 </ul>
 
-<a href="pet_food/edit/{{ petFood.id }}" class="golink">Edit</a>
-<a href="pet_food/delete/{{ petFood.id }}" class="golink">Delete</a>
+<a href="/pet_food/update/{{ petFood.id }}" class="golink">Edit</a>
+<a href="/pet_food/delete/{{ petFood.id }}" class="golink">Delete</a>
 {% endblock %}

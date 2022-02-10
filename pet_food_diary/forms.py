@@ -15,18 +15,18 @@ class PetForm(forms.Form):
     comments = forms.CharField(widget=forms.Textarea, required=False)
 
 
-# class MealForm(ModelForm):
-#     class Meta:
-#         model = MealModel
-#         fields = ('pet', 'date')
-#
-#     def __init__(self, *args, **kwargs):
-#         self.pet = forms.ModelChoiceField(queryset=PetModel.objects.filter(owner=kwargs.pop('user', None)))
-#
-#         super(MealForm, self).__init__(*args, **kwargs)
-#         self.fields['date'].widget = widgets.AdminSplitDateTime()
-#
-# class PetFoodAmountForm(ModelForm):
-#     class Meta:
-#         model = PetFoodAmountModel
-#         fields = '__all__'
+class MealForm(ModelForm):
+    class Meta:
+        model = MealModel
+        fields = ('pet', 'date')
+
+    def __init__(self, *args, **kwargs):
+        self.pet = forms.ModelChoiceField(queryset=PetModel.objects.filter(owner=kwargs.pop('user', None)))
+
+        super(MealForm, self).__init__(*args, **kwargs)
+        self.fields['date'].widget = widgets.AdminSplitDateTime()
+
+class PetFoodAmountForm(ModelForm):
+    class Meta:
+        model = PetFoodAmountModel
+        fields = '__all__'

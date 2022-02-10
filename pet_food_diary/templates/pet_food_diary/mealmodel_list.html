@@ -1,14 +1,24 @@
 {% extends 'base.html' %}
 
-{% block title %} {{ pet.name }}'s meals {% endblock %}
+{% block title %}
+    Meals
+{% endblock %}
 
 {% block content %}
+    {% for pet in pets %}
+    {{ pet.name }}'s meals
     <div class="meal_list">
     <ul>
-        {% for object in meals %}
-            <li>{{ object.date }} </li>
-            <a href="/meal/{{ object.id }}/" class="golink">Details</a>
+        {% for meal in meals %}
+            {%  if meal.pet.id == pet.id %}
+            <li>{{ meal.date }} </li>
+            <a href="/meal/detail/{{ meal.id }}/" class="golink">Details</a>
+            {% endif %}
         {% endfor %}
     </ul>
+    {%  empty %}
+        Sorry, nothing was found.
+    {% endfor %}
     </div>
+
 {% endblock %}

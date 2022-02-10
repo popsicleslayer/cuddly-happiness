@@ -13,8 +13,12 @@ class PetModel(models.Model):
     date_of_birth = models.DateField()
     comments = models.TextField(null=True)
 
+    def get_absolute_url(self):
+        return f'/pet/details/{self.id}/'
+
     def __str__(self):
         return self.name
+
 
 
 class PetFoodModel(models.Model):
@@ -27,7 +31,7 @@ class PetFoodModel(models.Model):
     other = models.TextField()
 
     def get_absolute_url(self):
-        return f'/pet_food/{self.id}/'
+        return f'pet_food/details/{self.id}/'
 
     def __str__(self):
         return self.name

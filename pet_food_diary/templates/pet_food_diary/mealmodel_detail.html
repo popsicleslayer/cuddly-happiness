@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %} Meal {{ object.date }} {% endblock %}
+{% block title %} Meal {{ meal.date }} {% endblock %}
 
 {% block content %}
     <ul>
-        <li>{{ object.pet_food_used.pet_food }}</li>
-        <li>{{ object.pet_food_used.grams }}</li>
+    {% for food in pet_food %}
+        <li>{{ food.name }}</li>
+        <li>{{ food.amount }}</li>
+    {% endfor %}
     </ul>
 {% endblock %}

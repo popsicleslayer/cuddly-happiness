@@ -12,8 +12,8 @@
     <h4>Birth date:{{ pet.date_of_birth }}</h4>
     <h4>Comments:{{ pet.comments }}</h4>
 
-    <a href="pet/edit/{{ pet.id }}" class="golink">Edit</a>
-    <a href="pet/delete/{{ pet.id }}" class="golink">Delete</a>
-    <a href="pet/list/{{ user_id }}" class="golink">Go back to pet list</a>
+    <a href="/pet/edit/{{ pet.id }}" class="golink">Edit</a>
+    <a href="/pet/delete/{{ pet.id }}" class="golink">Delete</a>
+    <a href="/pet/list/" class="golink">Go back to pet list</a>
 
 {% endblock %}

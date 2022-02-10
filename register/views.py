@@ -17,6 +17,7 @@ class RegisterUserView(View):
             'form' : self.form_class()
         }
         return render(request, 'register.html', context)
+
     def post(self, request, *args, **kwargs):
         form = UserRegisterForm(request.POST)
         message = None

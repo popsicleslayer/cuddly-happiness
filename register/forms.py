@@ -16,7 +16,7 @@ class UserRegisterForm(forms.Form):
 
 
     def clean_password2(self):
-        #Checks if provided passwords match
+        """ Checks if provided passwords match"""
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 != password2:
@@ -25,7 +25,7 @@ class UserRegisterForm(forms.Form):
             return password2
 
     def clean_username(self):
-        #Checks if username is already in use
+        """Checks if username is already in use"""
         username =self.cleaned_data.get('username')
         if User.objects.filter(username=username):
             raise ValidationError('This username is already in use')

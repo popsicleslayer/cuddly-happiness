@@ -7,8 +7,8 @@
     <ul>
  {% for pet in pets %}
      <li>{{ pet.name }}</li>
-     <a href="/edit_pet/{{ pet.id }}/" class="golink">Edit {{ pet.name }} information</a>
-     <a href="/delete_pet/{{ pet.id }}/" class="golink">Delete {{ pet.name }}</a>
+     <a href="/pet/edit/{{ pet.id }}/" class="golink">Edit {{ pet.name }} information</a>
+     <a href="/pet/delete/{{ pet.id }}/" class="golink">Delete {{ pet.name }}</a>
  {% endfor %}
     </ul>
     </div>
